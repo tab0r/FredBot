@@ -1,16 +1,35 @@
-/* Ping))) Sensor
+/* SimpleSensor.ino rangefinder/accelerometer datalogger
+This sketch records data from one or more sensing devices onto an SD card. 
+Currently, the main loop must be edited to determine which sensor is used.
+Hardware:
+Arduino UNO
+Seeed Studios SD shield
+PING))) ultrasonic rangefinder
+ADXL345 accelerometer on SparkFun breakout
+
+Arduino Pin	ADXL345 Pin
+	9	 CS
+	11	 SDA
+	12	 SDO
+	13	 SCL
+	3V3	 VCC
+	Gnd	 GND
+Arduino Pin	PING))) Pin
+	5V	 +V
+	Gnd	 GND
+	7	 SIG
+Arduino Pin	SD Pin
+	10	 Output
+
+
+pingstuff{}
   
-   This sketch reads a PING))) ultrasonic rangefinder and returns the
+   This loop reads a PING))) ultrasonic rangefinder and returns the
    distance to the closest object in range. To do this, it sends a pulse
    to the sensor to initiate a reading, then listens for a pulse 
    to return.  The length of the returning pulse is proportional to 
    the distance of the object from the sensor.
      
-   The circuit:
-	* +V connection of the PING))) attached to +5V
-	* GND connection of the PING))) attached to ground
-	* SIG connection of the PING))) attached to digital pin 7
-
    http://www.arduino.cc/en/Tutorial/Ping
    
    created 3 Nov 2008
@@ -18,15 +37,25 @@
    modified 30 Aug 2011
    by Tom Igoe
  
-   This example code is in the public domain.
+   This code is in the public domain on GPL.
 
  */
 #include <SD.h>
 //Add the SPI library so we can communicate with the ADXL345 sensor
 #include <SPI.h>
 
-//Assign the Chip Select signal to pin 9.
+//Assign the ADXL345 Chip Select signal to pin 9. Note that this differs from the SparkFun guide.
 int CS=9;
+
+//Assign the SD output to pin 10. 
+int SD=10;
+
+unsigned long time;
+File myFile;
+
+// this constant won't change.  It's the pin number
+// of the sensor's output:
+const int pingPin = 7;
 
 //This is a list of some of the registers available on the ADXL345.
 //To learn more about these and the rest of the registers on the ADXL345, read the datasheet!
@@ -43,13 +72,6 @@ char DATAZ1 = 0x37;	//Z-Axis Data 1
 char values[10];
 //These variables will be used to hold the x,y and z axis accelerometer values.
 int x,y,z;
-
-unsigned long time;
-File myFile;
-
-// this constant won't change.  It's the pin number
-// of the sensor's output:
-const int pingPin = 7;
 
 void setup() {
   //Initiate an SPI communication instance.
@@ -76,7 +98,7 @@ void setup() {
     return;
   }
   
-  //Set up the Chip Select pin to be an output from the Arduino.
+  //Set up the  ADXL345 Chip Select pin to be an output from the Arduino.
   pinMode(CS, OUTPUT);
   //Before communication starts, the Chip Select pin needs to be set high.
   digitalWrite(CS, HIGH);
