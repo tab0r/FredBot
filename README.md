@@ -35,16 +35,21 @@ LICENSE
 4. Troubleshooting
 ===========================================
 Most current issues appear from the SPI serial interface. Carefully ensure each serial interface has its own pin, and each device is properly connected. 
+20140228
+The new settings loader will crash unexpectedly if the settingstring uses the remaining chip memory. So, depending on what sensor functions you use, you can use more settings if you comment unused functions.
 
 ===========================================
 5. Known Bugs
 ===========================================
+(1) Loss of settingstring() if it uses remaining program memory. 
 
 ===========================================
 6. ChangeLog
 ===========================================
 Wednesday, September 25, 2013
 Project initialization on github by Tabor C. Henderson on behalf of MSU Denver Physics. Commit of SimpleSensor.ino, README.md, and LICENSE.
+Friday, February 28, 2014
+Updated to include a rudimentary settings loader. Also created new bugs. See below.
 
 ===========================================
 7. Authorship and License
