@@ -42,13 +42,13 @@ int x,y,z;
  */
 int linecount = 0;
 int count = 0;
-int PingMode = -1; // 1: use PingCount 2: use time
-int PingCount = -1; // for mode 1
-int PingDelay = -1; // for ALL modes- interval between readings
-int Time = -1;  // for mode 2 
-int AccelMode = -1; // 1: use ping settings 2: use Time 
-int DataMode = -1; // for something I haven't made up yet; maybe a pre calculation or interpolation?
-int loops = 0;
+int PingMode; // 1: use PingCount 2: use time
+int PingCount; // for mode 1
+int PingDelay; // for ALL modes- interval between readings
+int RunTime;  // for mode 2 
+int AccelMode; // 1: use ping settings 2: use Time 
+int DataMode; // for something I haven't made up yet; maybe a pre calculation or interpolation?
+int loops;
 
 void setup()
 {
@@ -64,16 +64,45 @@ void setup()
     return;
   }
   getSetting();
+  if(PingMode) {
+    Serial.print("Found PingMode "); 
+    Serial.println(PingMode);
+  }
+  if(PingCount) {
+    Serial.print("Found PingCount "); 
+    Serial.println(PingCount);
+  }
+  if(PingDelay) {
+    Serial.print("Found PingDelay "); 
+    Serial.println(PingDelay);
+  }
+  if(RunTime) {
+    Serial.print("Found RunTime "); 
+    Serial.println(RunTime);
+  }
+  if(AccelMode) {
+    Serial.print("Found AccelMode "); 
+    Serial.println(AccelMode);
+  }
+  if(DataMode) {
+    Serial.print("Found DataMode "); 
+    Serial.println(DataMode);
+  }
+  if(loops) {
+    Serial.print("Found loops "); 
+    Serial.println(loops);
+  }
 }
 
 void loop() {
   //get iterator value and loop that many times
-  for(int i=0; i < loops; i++) {
+  while(loops > 0) {
     Serial.println("Looping! Wheee");
     // open the data file
     myData = SD.open("data.txt", FILE_WRITE);
     // if the file opened okay, jump to main loop and write to it:
     if ((myData) && (DataMode!=-1)) {
+      Serial.println("Doing stuff!");
       //feelstuff();
       //pingstuff();
       myData.close(); 
@@ -83,6 +112,7 @@ void loop() {
       Serial.println("error opening data.txt");
     }
     myData.close(); 
+    loops = loops - 1;
   }
 }
 
@@ -111,8 +141,12 @@ void loop() {
  This example code is in the public domain.
  
  */
-
-
-
+//this is a handy debugging function
+int freeRam () 
+{
+  extern int __heap_start, *__brkval; 
+  int v; 
+  return (int) &v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval); 
+}
 
 
