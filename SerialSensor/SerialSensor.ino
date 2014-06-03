@@ -60,7 +60,8 @@ void loop()
     int i=1;
     startTime=micros();
     while (time < startTime+runTime) {
-      pingOnce();
+      time = micros();
+      mm = pingOnce();
       Serial.print(i);
       Serial.print(", ");
       Serial.print(time);

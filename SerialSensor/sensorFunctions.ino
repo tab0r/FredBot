@@ -1,6 +1,7 @@
-
-void pingOnce()
+//This function reads Ping))) once and returns the reading in millimeters.
+float pingOnce()
 {
+  float mm;
   long duration;
   // The PING))) is triggered by a HIGH pulse of 2 or more microseconds.
   // Give a short LOW pulse beforehand to ensure a clean HIGH pulse:
@@ -18,7 +19,7 @@ void pingOnce()
   duration = pulseIn(pingPin, HIGH);
   // convert the time into a distance
   mm = microsecondsToMillimeters(duration);
-  time = micros();
+  return mm;
 }
 
 float microsecondsToMillimeters(long microseconds)
