@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.48.2 r9819"
+   width="194.87732"
+   height="127.55821"
+   version="1.0"
+   sodipodi:docname="Ping-3.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs5">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective9" />
+    <inkscape:perspective
+       id="perspective3677"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 186.22786 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="372.45575 : 186.22786 : 1"
+       inkscape:persp3d-origin="186.22787 : 124.15191 : 1"
+       id="perspective36-1" />
+    <clipPath
+       id="clipPath50428-5"
+       clipPathUnits="userSpaceOnUse">
+      <path
+         id="path50430-08"
+         d="m 18,18 756,0 0,576 -756,0 0,-576 z"
+         inkscape:connector-curvature="0" />
+    </clipPath>
+    <clipPath
+       id="clipPath50420-4"
+       clipPathUnits="userSpaceOnUse">
+      <path
+         id="path50422-9"
+         d="m 36,36 500,0 0,540 -500,0 0,-540 z"
+         inkscape:connector-curvature="0" />
+    </clipPath>
+    <clipPath
+       id="clipPath3088-3"
+       clipPathUnits="userSpaceOnUse">
+      <path
+         id="path3090-0"
+         d="m 18,18 756,0 0,576 -756,0 0,-576 z"
+         inkscape:connector-curvature="0" />
+    </clipPath>
+    <linearGradient
+       id="linearGradient4088-5"
+       osb:paint="solid">
+      <stop
+         style="stop-color:#0000fc;stop-opacity:1;"
+         offset="0"
+         id="stop4090-2" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient2724-3">
+      <stop
+         id="stop2726-8"
+         offset="0"
+         style="stop-color:#0000fc;stop-opacity:1;" />
+    </linearGradient>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath2720-7">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 18,18 756,0 0,576 -756,0 0,-576 z"
+         id="path2722-8" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath2716-0">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 36,36 500,0 0,540 -500,0 0,-540 z"
+         id="path2718-4" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath2712-5">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 18,18 756,0 0,576 -756,0 0,-576 z"
+         id="path2714-7" />
+    </clipPath>
+    <inkscape:perspective
+       id="perspective112-1"
+       inkscape:persp3d-origin="186.22787 : 124.15191 : 1"
+       inkscape:vp_z="372.45575 : 186.22786 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 186.22786 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient4067-0">
+      <stop
+         id="stop4069-6"
+         offset="0"
+         style="stop-color:#0000fc;stop-opacity:1;" />
+    </linearGradient>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath4063-0">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 18,18 756,0 0,576 -756,0 0,-576 z"
+         id="path4065-3" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath4059-3">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 36,36 500,0 0,540 -500,0 0,-540 z"
+         id="path4061-5" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath4055-0">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 18,18 756,0 0,576 -756,0 0,-576 z"
+         id="path4057-2" />
+    </clipPath>
+    <inkscape:perspective
+       id="perspective4053-3"
+       inkscape:persp3d-origin="186.22787 : 124.15191 : 1"
+       inkscape:vp_z="372.45575 : 186.22786 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 186.22786 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient4088-9-2">
+      <stop
+         id="stop4090-9-7"
+         offset="0"
+         style="stop-color:#0000fc;stop-opacity:1;" />
+    </linearGradient>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath3088-2-1">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 18,18 756,0 0,576 -756,0 0,-576 z"
+         id="path3090-3-0" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath50420-9-0">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 36,36 500,0 0,540 -500,0 0,-540 z"
+         id="path50422-0-9" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath50428-3-7">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 18,18 756,0 0,576 -756,0 0,-576 z"
+         id="path50430-7-1" />
+    </clipPath>
+    <inkscape:perspective
+       id="perspective112-7-7"
+       inkscape:persp3d-origin="186.22787 : 124.15191 : 1"
+       inkscape:vp_z="372.45575 : 186.22786 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 186.22786 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 186.22786 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="372.45575 : 186.22786 : 1"
+       inkscape:persp3d-origin="186.22787 : 124.15191 : 1"
+       id="perspective36" />
+    <clipPath
+       id="clipPath50428-8"
+       clipPathUnits="userSpaceOnUse">
+      <path
+         id="path50430-0"
+         d="m 18,18 756,0 0,576 -756,0 0,-576 z"
+         inkscape:connector-curvature="0" />
+    </clipPath>
+    <clipPath
+       id="clipPath50420-6"
+       clipPathUnits="userSpaceOnUse">
+      <path
+         id="path50422-5"
+         d="m 36,36 500,0 0,540 -500,0 0,-540 z"
+         inkscape:connector-curvature="0" />
+    </clipPath>
+    <clipPath
+       id="clipPath3088-7"
+       clipPathUnits="userSpaceOnUse">
+      <path
+         id="path3090-34"
+         d="m 18,18 756,0 0,576 -756,0 0,-576 z"
+         inkscape:connector-curvature="0" />
+    </clipPath>
+    <linearGradient
+       id="linearGradient4088-3"
+       osb:paint="solid">
+      <stop
+         style="stop-color:#0000fc;stop-opacity:1;"
+         offset="0"
+         id="stop4090-0" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient2724">
+      <stop
+         id="stop2726"
+         offset="0"
+         style="stop-color:#0000fc;stop-opacity:1;" />
+    </linearGradient>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath2720">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 18,18 756,0 0,576 -756,0 0,-576 z"
+         id="path2722" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath2716">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 36,36 500,0 0,540 -500,0 0,-540 z"
+         id="path2718" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath2712">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 18,18 756,0 0,576 -756,0 0,-576 z"
+         id="path2714" />
+    </clipPath>
+    <inkscape:perspective
+       id="perspective112-4"
+       inkscape:persp3d-origin="186.22787 : 124.15191 : 1"
+       inkscape:vp_z="372.45575 : 186.22786 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 186.22786 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient4067">
+      <stop
+         id="stop4069"
+         offset="0"
+         style="stop-color:#0000fc;stop-opacity:1;" />
+    </linearGradient>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath4063">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 18,18 756,0 0,576 -756,0 0,-576 z"
+         id="path4065" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath4059">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 36,36 500,0 0,540 -500,0 0,-540 z"
+         id="path4061" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath4055">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 18,18 756,0 0,576 -756,0 0,-576 z"
+         id="path4057" />
+    </clipPath>
+    <inkscape:perspective
+       id="perspective4053"
+       inkscape:persp3d-origin="186.22787 : 124.15191 : 1"
+       inkscape:vp_z="372.45575 : 186.22786 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 186.22786 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient4088-9">
+      <stop
+         id="stop4090-9"
+         offset="0"
+         style="stop-color:#0000fc;stop-opacity:1;" />
+    </linearGradient>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath3088-2">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 18,18 756,0 0,576 -756,0 0,-576 z"
+         id="path3090-3" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath50420-9">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 36,36 500,0 0,540 -500,0 0,-540 z"
+         id="path50422-0" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath50428-3">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 18,18 756,0 0,576 -756,0 0,-576 z"
+         id="path50430-7" />
+    </clipPath>
+    <inkscape:perspective
+       id="perspective112-7"
+       inkscape:persp3d-origin="186.22787 : 124.15191 : 1"
+       inkscape:vp_z="372.45575 : 186.22786 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 186.22786 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient4088">
+      <stop
+         id="stop4090"
+         offset="0"
+         style="stop-color:#0000fc;stop-opacity:1;" />
+    </linearGradient>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath3088">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 18,18 756,0 0,576 -756,0 0,-576 z"
+         id="path3090" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath50420">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 36,36 500,0 0,540 -500,0 0,-540 z"
+         id="path50422" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath50428">
+      <path
+         inkscape:connector-curvature="0"
+         d="m 18,18 756,0 0,576 -756,0 0,-576 z"
+         id="path50430" />
+    </clipPath>
+    <inkscape:perspective
+       id="perspective112"
+       inkscape:persp3d-origin="186.22787 : 124.15191 : 1"
+       inkscape:vp_z="372.45575 : 186.22786 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 186.22786 : 1"
+       sodipodi:type="inkscape:persp3d" />
+  </defs>
+  <sodipodi:namedview
+     inkscape:window-height="1002"
+     inkscape:window-width="1680"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     guidetolerance="10.0"
+     gridtolerance="10.0"
+     objecttolerance="10.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base"
+     showgrid="false"
+     inkscape:zoom="2.9839286"
+     inkscape:cx="94.438959"
+     inkscape:cy="107.61895"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:current-layer="svg2"
+     units="cm"
+     inkscape:window-maximized="0" />
+  <path
+     inkscape:connector-curvature="0"
+     style="fill:none;stroke:#000000;stroke-width:0.09;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     d="m 111.90147,25.338465 33.49283,0 33.49284,0 0,38.44064 0,38.440645 -81.448486,0 -81.448484,0 0,-38.440645 0,-38.44064 33.112235,0 33.112229,0 29.686836,0 z"
+     id="path2850"
+     sodipodi:nodetypes="cccccccccccc" />
+  <path
+     sodipodi:type="arc"
+     style="fill:none;stroke:#ff0000;stroke-width:0.19085674;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     id="path3638"
+     sodipodi:cx="-66.176468"
+     sodipodi:cy="66.669121"
+     sodipodi:rx="9.375"
+     sodipodi:ry="9.375"
+     d="m -56.801468,66.669121 a 9.375,9.375 0 1 1 -18.75,0 9.375,9.375 0 1 1 18.75,0 z"
+     transform="matrix(0.4715579,0,0,0.4715579,55.593934,61.746873)" />
+  <path
+     transform="matrix(-0.4715579,0,0,-0.4715579,139.28337,65.811337)"
+     d="m -56.801468,66.669121 a 9.375,9.375 0 1 1 -18.75,0 9.375,9.375 0 1 1 18.75,0 z"
+     sodipodi:ry="9.375"
+     sodipodi:rx="9.375"
+     sodipodi:cy="66.669121"
+     sodipodi:cx="-66.176468"
+     id="path3640"
+     style="fill:none;stroke:#ff0000;stroke-width:0.19085674;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     sodipodi:type="arc" />
+  <path
+     sodipodi:type="arc"
+     style="fill:none;stroke:#ff0000;stroke-width:0.02148959;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     id="path6953"
+     sodipodi:cx="-15.672075"
+     sodipodi:cy="6.4171796"
+     sodipodi:rx="7.3827133"
+     sodipodi:ry="7.3827133"
+     d="m -8.289362,6.4171796 a 7.3827133,7.3827133 0 1 1 -14.765427,0 7.3827133,7.3827133 0 1 1 14.765427,0 z"
+     transform="matrix(4.1880738,0,0,4.1880738,117.92389,36.561132)" />
+  <path
+     transform="matrix(4.1880738,0,0,4.1880738,208.61769,36.561132)"
+     d="m -8.289362,6.4171796 a 7.3827133,7.3827133 0 1 1 -14.765427,0 7.3827133,7.3827133 0 1 1 14.765427,0 z"
+     sodipodi:ry="7.3827133"
+     sodipodi:rx="7.3827133"
+     sodipodi:cy="6.4171796"
+     sodipodi:cx="-15.672075"
+     id="path6955"
+     style="fill:none;stroke:#ff0000;stroke-width:0.02148959;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     sodipodi:type="arc" />
+  <path
+     style="opacity:1;fill:none;fill-opacity:1;stroke:#ff0000;stroke-width:0.09;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+     d="M 28.5625 0.3125 C 27.581004 0.3125 26.78125 1.112254 26.78125 2.09375 L 26.78125 10.71875 L 16.21875 10.71875 C 7.2675059 10.71875 0.0625 17.923756 0.0625 26.875 L 0.0625 100.6875 C 0.0625 109.63874 7.2675059 116.84375 16.21875 116.84375 L 26.78125 116.84375 L 26.78125 125.0625 C 26.78125 126.044 27.581004 126.84375 28.5625 126.84375 L 42.03125 126.84375 C 43.012746 126.84375 43.78125 126.044 43.78125 125.0625 L 43.78125 116.84375 L 151.09375 116.84375 L 151.09375 125.0625 C 151.09375 126.044 151.86225 126.84375 152.84375 126.84375 L 166.3125 126.84375 C 167.294 126.84375 168.09375 126.044 168.09375 125.0625 L 168.09375 116.84375 L 178.65625 116.84375 C 187.60749 116.84375 194.8125 109.63874 194.8125 100.6875 L 194.8125 26.875 C 194.8125 17.923756 187.60749 10.71875 178.65625 10.71875 L 168.09375 10.71875 L 168.09375 2.09375 C 168.09375 1.112254 167.294 0.3125 166.3125 0.3125 L 152.84375 0.3125 C 151.86225 0.3125 151.09375 1.112254 151.09375 2.09375 L 151.09375 10.71875 L 43.78125 10.71875 L 43.78125 2.09375 C 43.78125 1.112254 43.012746 0.3125 42.03125 0.3125 L 28.5625 0.3125 z "
+     id="rect3327" />
+</svg>
