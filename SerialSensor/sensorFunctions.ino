@@ -11,7 +11,6 @@ float pingOnce()
   digitalWrite(pingPin, HIGH);
   delayMicroseconds(5);
   digitalWrite(pingPin, LOW);
-
   // The same pin is used to read the signal from the PING))): a HIGH
   // pulse whose duration is the time (in microseconds) from the sending
   // of the ping to the reception of its echo off of an object.
@@ -25,10 +24,11 @@ float pingOnce()
 float microsecondsToMillimeters(long microseconds)
 {
   // The speed of sound is 340 m/s or 29 microseconds per centimeter.
-  // The ping travels out and back, so to find the distance of the
+  // The ping travels out and back, from one side of the board to the other,
+  // so to find the distance of the
   // object we take half of the distance travelled, and apply the pythagorean theorem
-  //return sqrt((microseconds / 2.9 / 2)+161.29);
-  //using a temperature adjusted value of 347.7 m/s;
+  // return sqrt((microseconds / 2.9 / 2)+161.29);
+  // using a temperature adjusted value of 347.7 m/s;
   float hyp = microseconds / 2.876 / 2;
   return sqrt((hyp*hyp)-161.29);
 }

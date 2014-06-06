@@ -10,7 +10,6 @@ void pingstuff(uint16_t pingCount, uint8_t pingDelay, uint8_t pingMode)
     // and the distance result in inches and centimeters:
     long duration;
     float mm;
-
     // The PING))) is triggered by a HIGH pulse of 2 or more microseconds.
     // Give a short LOW pulse beforehand to ensure a clean HIGH pulse:
     pinMode(pingPin, OUTPUT);
@@ -54,11 +53,13 @@ void pingstuff(uint16_t pingCount, uint8_t pingDelay, uint8_t pingMode)
 long microsecondsToMillimeters(long microseconds)
 {
   // The speed of sound is 340 m/s or 29 microseconds per centimeter.
-  // The ping travels out and back, so to find the distance of the
-  // object we take half of the distance travelled.
-  //return microseconds / 2.9 / 2;
-  // code adopted from Galeriu et al
-  return sqrt((microseconds/2/2.9)*(microseconds/2/2.9)-12.5*12.5);
+  // The ping travels out and back, from one side of the board to the other,
+  // so to find the distance of the
+  // object we take half of the distance travelled, and apply the pythagorean theorem
+  // return sqrt((microseconds / 2.9 / 2)+161.29);
+  // using a temperature adjusted value of 347.7 m/s;
+  float hyp = microseconds / 2.876 / 2;
+  return sqrt((hyp*hyp)-161.29);
 }
 
 

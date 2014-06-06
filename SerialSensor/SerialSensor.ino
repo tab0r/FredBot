@@ -44,7 +44,7 @@ void loop()
   Serial.println();  
   Serial.print("i, micros, mm");
   Serial.println();
-  if(PingM == 1) {
+  if (PingM == 1) {
     for (int i=1; i<=PingC; i++) {
       pingOnce();
       Serial.print(i);
@@ -56,7 +56,7 @@ void loop()
       delay(PingD);
     }
   } 
-  else if(PingM==2) {
+  else if (PingM==2) {
     int i=1;
     startTime=micros();
     while (time < startTime+runTime) {
