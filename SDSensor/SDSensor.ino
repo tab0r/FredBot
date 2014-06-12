@@ -13,7 +13,7 @@ const int pingPin = 7;
 const int trigPin = 7;
 const int echoPin = 8;
 File mySettings;
-const int chipSelectSD = 10; 
+const int chipSelectSD = 9;//usually 10 
 unsigned int PingM;
 unsigned int PingC;
 unsigned int PingD;
@@ -32,7 +32,7 @@ void setup() {
     Serial.println("SD initialization failed! Loading defaults...");
     DataM = 0;
     PingM = 0;
-    PingC = 500;
+    PingC = 100;
     PingD = 1;
     RunTime = 0;
     FBLoops = 1;

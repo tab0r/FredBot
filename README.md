@@ -18,7 +18,7 @@ The FredBot Project seeks to provide resources for physical measurement and data
 ===========================================
 2. Generic Program Structure
 ===========================================
-In general, the FredBot platform is based on modularity. So, each combination of an Arduino (or ATmega), sensing equipment, and data handling equipment will be called a module. Each module has a corresponding folder in the Manifest. All instructions for setting up that module may be found within the folder. All modules approximately consist of five steps. 
+In general, the FredBot platform is based on modularity. So, each combination of an Arduino (or ATmega), sensing equipment, and data handling equipment will be called a module. Each module has a corresponding folder in the Manifest. All instructions for setting up that module may be found within the folder. All modules consist approximately of five steps. 
 
 I. Program Initialization
 
@@ -30,15 +30,24 @@ IV. Return to II
 
 V. Break
 
-VI. Data storage and shutdown
+VI. Data handling and shutdown
 
 ===========================================
 3. Manifest
 ===========================================
 
-SensorSettings/
+Resources/
+	Papers, tutorials, and design files.
+
+SDSensor/
+	SD card data and setting storage.
+
+SerialSensor/
+	Data transmitted over serial, at time of run.
+	Future version to include temporary storage on internal memory.
 
 SimpleSensor/
+	Test, use at your own risk. Should be simpler, to even deserve the name.
 
 README.md
 

@@ -33,15 +33,27 @@ void setup() {
 
 void loop()
 {
-  for (int i = 0; i < 3; i++) {
-    Serial.println(3-i);
-    delay(1000);
+  Serial.println("Enter 1 to begin run with a 3-second countdown, anything else to begin run immediately");
+  int startChoice = -1;
+  while (startChoice <= 0) { 
+    startChoice = readEntry();
   }
-  Serial.println("Go!");
+  Serial.print("The startChoice is ");
+  Serial.println(startChoice);
+  if (startChoice == 1) {
+    for (int i = 0; i < 3; i++) {
+      Serial.println(3-i);
+      delay(1000);
+    }
+    Serial.println("Go!");
+  }
+  else {
+  }
   //collect data based on settings parameters
   //now we move onto doing stuff with our fresh settings
   //print sensor readings to serial, throw them away
-  Serial.println();  
+  Serial.println();
+  startTime=micros();  
   Serial.print("i, micros, mm");
   Serial.println();
   if (PingM == 1) {
@@ -49,7 +61,7 @@ void loop()
       pingOnce();
       Serial.print(i);
       Serial.print(", ");
-      Serial.print(time);
+      Serial.print(time-startTime);
       Serial.print(", ");
       Serial.print(mm);
       Serial.println();  
@@ -58,18 +70,17 @@ void loop()
   } 
   else if (PingM==2) {
     int i=1;
-    startTime=micros();
     while (time < startTime+runTime) {
       time = micros();
       mm = pingOnce();
       Serial.print(i);
       Serial.print(", ");
-      Serial.print(time);
+      Serial.print(time-startTime);
       Serial.print(", ");
       Serial.print(mm);
       Serial.println();
       i++;
-      delay(PingD);
+      //delay(PingD);
     }
   }
   Serial.println("Data collection complete.");
@@ -94,7 +105,5 @@ void loop()
     Serial.println("Invalid choice");
   }
 }
-
-
 
 

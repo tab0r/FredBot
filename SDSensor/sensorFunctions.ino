@@ -40,6 +40,8 @@ void pingstuff(uint16_t pingCount, uint8_t pingDelay, uint8_t pingMode)
     else  {//(pingMode == 0 || !pingMode) { 
       Serial.print(i);
       Serial.print(", ");
+      Serial.print(duration);
+      Serial.print(", ");
       Serial.print(time);
       Serial.print(", ");
       Serial.print(mm);
@@ -50,7 +52,7 @@ void pingstuff(uint16_t pingCount, uint8_t pingDelay, uint8_t pingMode)
   Serial.println("distance data collected");
 }
 
-long microsecondsToMillimeters(long microseconds)
+float microsecondsToMillimeters(long microseconds)
 {
   // The speed of sound is 340 m/s or 29 microseconds per centimeter.
   // The ping travels out and back, from one side of the board to the other,

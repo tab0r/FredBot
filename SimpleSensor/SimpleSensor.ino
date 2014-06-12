@@ -130,11 +130,13 @@ void feelstuff()
   myFile.print("i, ax, ay, az");    
   myFile.println(); 
 for (int i=0; i<500; i++) {
-  //Reading 6 bytes of data starting at register DATAX0 will retrieve the x,y and z acceleration values from the ADXL345.
+  //Reading 6 bytes of data starting at register DATAX0 will retrieve 
+  //the x,y and z acceleration values from the ADXL345.
   //The results of the read operation will get stored to the values[] buffer.
   readRegister(DATAX0, 6, values);
 
-  //The ADXL345 gives 10-bit acceleration values, but they are stored as bytes (8-bits). To get the full value, two bytes must be combined for each axis.
+  //The ADXL345 gives 10-bit acceleration values, but they are stored as bytes (8-bits). 
+  //To get the full value, two bytes must be combined for each axis.
   //The X value is stored in values[0] and values[1].
   x = ((int)values[1]<<8)|(int)values[0];
   //The Y value is stored in values[2] and values[3].
@@ -244,7 +246,8 @@ void writeRegister(char registerAddress, char value){
   digitalWrite(CS, HIGH);
 }
 
-//This function will read a certain number of registers starting from a specified address and store their values in a buffer.
+//This function will read a certain number of registers starting from a specified
+//address and store their values in a buffer.
 //Parameters:
 //  char registerAddress - The register addresse to start the read sequence from.
 //  int numBytes - The number of registers that should be read.
