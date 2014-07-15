@@ -50,7 +50,7 @@ void setup() {
               .setColorBackground(color(255, 100))
                 .setColorForeground(color(255, 100));
   ;
-  statusString = "Waiting for input; if message persists for more than five seconds, check connection and restart Simple.";
+  statusString = "Waiting for input; if message persists for more than thirty seconds, check connection and restart Simple.";
   messageArea.setText(statusString);
 
   textFont(font);
