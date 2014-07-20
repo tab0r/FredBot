@@ -158,13 +158,13 @@ void draw() {
     }
     //println(xpos);
     if (logging == true) {
-      data.add(inVal);  // Write the coordinate to the file
+      data.add(inVal+", "+millis());  // Write the coordinate to the file
     }
     rect(20, 360, xpos, 20);
     port.write('D');       // ask for a distance
   }
 }
-
+  
 void serialEvent(Serial p) {
   // if this is the first byte received, and it's an A,
   // clear the serial buffer and note that you've
@@ -185,6 +185,7 @@ void serialEvent(Serial p) {
     //but we don't know how many digits, and we have
     //to convert from ASCII, so it's loopy time
     byte[] inBuffer = p.readBytes();
+    boolean multiPoint = false;
     if (inBuffer != null) {
       //println(inBuffer);
       inVal = 0;

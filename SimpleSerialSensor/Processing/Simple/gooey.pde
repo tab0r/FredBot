@@ -4,6 +4,7 @@ public void startLog() {
   data=new Data();
   data.beginSave();
   logging = true;
+  data.add("mm, ms");
 }
 
 public void finishLog() {
