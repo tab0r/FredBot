@@ -37,7 +37,7 @@ const int trigPin = 7;
 const int echoPin = 8;
 // for holding the reading value
 float mm;
-float gees[3];
+int gees[3];
 char val; //input from serial
 
 void setup() {
@@ -56,6 +56,7 @@ void setup() {
   digitalWrite(CS, HIGH);
   
   //Put the ADXL345 into +/- 4G range by writing the value 0x01 to the DATA_FORMAT register.
+  //Put the ADXL345 into +/- 2G range by writing the value 0x00 to the DATA_FORMAT register.
   writeRegister(DATA_FORMAT, 0x01);
   //Put the ADXL345 into Measurement Mode by writing 0x08 to the POWER_CTL register.
   writeRegister(POWER_CTL, 0x08);  //Measurement mode 
@@ -76,17 +77,22 @@ void loop()
     else if (val == 'D') //if we get a D for 'distance'
     {
       Serial.println(pingOnce());
-    } else if (val == 'T') {
+    } else if (val == 'T') { // T for 'time'
       String outputTime=String(millis());
-      Serial.print(outputTime);
-      Serial.print(", ");
+      Serial.println(outputTime);
+    } else if (val == 'G') { // G for 'gees'
       feelStuff();
       Serial.print(gees[0]);
       Serial.print(", ");
       Serial.print(gees[1]);
       Serial.print(", ");
       Serial.println(gees[2]);
-    } else if (val == 'X') {
+    } else if (val == 'K') {
+      String outputTime=String(millis());
+      Serial.print(outputTime);
+      Serial.print(", ");
+      Serial.print(pingOnce());
+      Serial.print(", ");
       feelStuff();
       Serial.print(gees[0]);
       Serial.print(", ");

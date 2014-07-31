@@ -5,17 +5,17 @@
     <key>CFBundleDevelopmentRegion</key>
     <string>English</string>
     <key>CFBundleExecutable</key>
-    <string>Simple</string>
+    <string>SimpleGUI</string>
     <key>CFBundleIconFile</key>
     <string>sketch.icns</string>
     <key>CFBundleIdentifier</key>
-    <string>Simple</string>
+    <string>SimpleGUI</string>
     <key>CFBundleDisplayName</key>
-    <string>Simple</string>
+    <string>SimpleGUI</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleName</key>
-    <string>Simple</string>
+    <string>SimpleGUI</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
 
@@ -36,7 +36,7 @@
     <string>jdk1.7.0_55.jdk</string>
 
     <key>JVMMainClassName</key>
-    <string>Simple</string>
+    <string>SimpleGUI</string>
 
     <key>LSMinimumSystemVersion</key>
     <string>10.7.3</string>
@@ -66,7 +66,7 @@
       <string>-Dapple.laf.useScreenMenuBar=true</string>
       <string>-Dcom.apple.macos.use-file-dialog-packages=true</string>
       <string>-Dcom.apple.macos.useScreenMenuBar=true</string>
-      <string>-Dcom.apple.mrj.application.apple.menu.about.name=Simple</string>
+      <string>-Dcom.apple.mrj.application.apple.menu.about.name=SimpleGUI</string>
       <string>-Dcom.apple.smallTabs=true</string>
     </array>
     <key>JVMArguments</key>

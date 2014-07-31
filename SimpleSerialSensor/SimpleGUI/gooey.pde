@@ -4,15 +4,34 @@ public void startLog() {
   data=new Data();
   data.beginSave();
   logging = true;
+  //check checkbox status to determine what header to use
+  float[] dataChoice = sensorCheckBox.getArrayValue();
+  String fileHeader = "";
+  if (dataChoice[0] == 1.0) {
+    fileHeader = fileHeader + "Host Clock[ms], ";
+  };
+  if (dataChoice[1] == 1.0) {
+    fileHeader = fileHeader + "Ext Clock[ms], ";
+  };
+  if (dataChoice[2] == 1.0) {
+    fileHeader = fileHeader + "Distance [mm], ";
+  };
+  if (dataChoice[3] == 1.0) {
+    fileHeader = fileHeader + "X-axis [g], Y-axis [g], Z-axis [g]";
+  }; 
+  //data.add("ms Int, ms Ext, mm, aX, aY, aZ");
+  data.add(fileHeader);
+  logStartTime = millis();
 }
 
 public void finishLog() {
   data.endSave(
   data.getIncrementalFilename(
-  sketchPath("FredBot"+
+  //sketchPath(
+  selectedFolder+
     java.io.File.separator+
     fileName+
-    " ####.txt")));
+    " ####.txt"));//);
   statusString = "Data log saved";
   logging = false;
   //exit();  // Stops the program
@@ -24,7 +43,25 @@ public void fileName(String theText) {
   fileName = theText;
 }
 
-//message area control
+public void setName() {
+  fileName(cp5.get(Textfield.class,"fileName").getText());
+}
+
+public void refreshCom() {
+  ports.clear();
+  setupCOMport(ports);
+}
+
+void folderSelected(File selection) {
+  if (selection == null) {
+    println("Window was closed or the user hit cancel.");
+  } else {
+    selectedFolder = selection.getAbsolutePath();
+    println("User selected " + selectedFolder);
+  }
+}
+  
+  //message area control
 /*
 void referenceFunction() {
   if(key=='r') {

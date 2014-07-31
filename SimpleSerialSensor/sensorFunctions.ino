@@ -49,15 +49,19 @@ void feelStuff()
   y = ((int)values[3]<<8)|(int)values[2];
   //The Z value is stored in values[4] and values[5].
   z = ((int)values[5]<<8)|(int)values[4];
+  gees[0] = x;
+  gees[1] = y;
+  gees[2] = z;
   //Convert the accelerometer value to G's. 
   //With 10 bits measuring over a +/-4g range we 
   //can find how to convert by using the equation:
   // Gs = Measurement Value * (G-range/(2^10)) 
-  //or Gs = Measurement Value * (8/1024)
-  gees[0] = x * 0.0078/2;
-  gees[1] = y * 0.0078/2;
-  gees[2] = z * 0.0078/2;
-
+  //or Gs = Measurement Value * (8/1024) 
+  /*
+  gees[0] = x * 0.0078;
+  gees[1] = y * 0.0078;
+  gees[2] = z * 0.0078;
+  */
 }
 
 //This function will write a value to a register on the ADXL345.
