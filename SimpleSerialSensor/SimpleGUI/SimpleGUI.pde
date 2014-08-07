@@ -11,6 +11,10 @@ ControlP5 cp5;
 Accordion guiAccordion;
 String textValue = "";
 Textarea messageArea;
+Textfield distCalEntry;
+Textfield xlCalX;
+Textfield xlCalY;
+Textfield xlCalZ;
 
 Data data;                       // The data file stream
 DropdownList ports;              //Define the variable ports as a Dropdownlist.
@@ -59,59 +63,58 @@ void setup() {
 void gui() {
   cp5 = new ControlP5(this);
 
-  //Sensor setup section
-  Group g1 = cp5.addGroup("Sensor Setup")
+  // Note that group g0 is below to ensure the dropdown list gets rendered above other elements
+
+    //Sensor calibration section
+  Group g1 = cp5.addGroup("Sensor Calibration")
     .setBackgroundColor(color(0, 64))
-      .setBackgroundHeight(200)
-        ;
-  // Refresh ports
-  cp5.addBang("refreshCom")
-    .setPosition(10, 10)
-      .setSize(200, 20)
-        .moveTo(g1)
-          .setCaptionLabel("Refresh COM Ports")
-            .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
-              ; 
-  // List all the available serial ports:
-  println(Serial.list());
-  //Make a dropdown list calle ports. Lets explain the values: ("name", left margin, top margin, width, height (84 here since the boxes have a height of 20, and theres 1 px between each item so 4 items (or scroll bar).
-  ports = cp5.addDropdownList("list-1", 10, 25, 200, 84)
-    .setPosition(10, 50)
-      .moveTo(g1);
-  //Setup the dropdownlist by using a function. This is more pratical if you have several list that needs the same settings.
-  customize(ports);
+      .setBackgroundHeight(230)
+        ;        
   // Calibration value for distance sensor            
-  cp5.addTextfield("distCalEntry")
+  distCalEntry = cp5.addTextfield("distCalEntry")
     .moveTo(g1)
       .setPosition(10, 55)
         .setSize(60, 20)
           .setCaptionLabel("Distance Calibration")
-              .setColor(color(255, 0, 0))
-                ;
+            .setColor(color(255, 0, 0))
+              ;
+  distCalEntry.setInputFilter(ControlP5.INTEGER);
   // Calibration value for acceleration x-axis            
-  cp5.addTextfield("xlCalX")
+  xlCalX = cp5.addTextfield("xlCalX")
     .setPosition(10, 90)
-      .setSize(60, 20)
-        .setCaptionLabel("X-Axis Accelerometer")
+      .setSize(200, 20)
+        .setCaptionLabel("X-Axis Accelerometer Calibration")
           .setColor(color(255, 0, 0))
             .moveTo(g1)
               ;
+  xlCalX.setInputFilter(ControlP5.FLOAT);
   // Calibration value for acceleration y-axis            
-  cp5.addTextfield("xlCalY")
+  xlCalY = cp5.addTextfield("xlCalY")
     .setPosition(10, 125)
-      .setSize(60, 20)
-        .setCaptionLabel("Y-Axis XL")
+      .setSize(200, 20)
+        .setCaptionLabel("Y-Axis Accelerometer Calibration")
           .setColor(color(255, 0, 0))
             .moveTo(g1)
               ;
+  xlCalY.setInputFilter(ControlP5.FLOAT);
   // Calibration value for acceleration z-axis            
-  cp5.addTextfield("xlCalZ")
-    .setPosition(10, 160)
-      .setSize(60, 20)
-        .setCaptionLabel("Z-Axis XL")
-          .setColor(color(255, 0, 0))
-            .moveTo(g1)
-              ;
+  xlCalZ = cp5.addTextfield("xlCalZ")
+    .setDecimalPrecision(10)
+      .setPosition(10, 160)
+        .setSize(200, 20)
+          .setCaptionLabel("Z-Axis Accelerometer Calibration")
+            .setColor(color(255, 0, 0))
+              .moveTo(g1)
+                ;  
+  xlCalZ.setInputFilter(ControlP5.FLOAT);
+  // Apply calibration values button
+  cp5.addBang("applyCal")
+    .setPosition(10, 200)
+      .setSize(200, 20)
+        .moveTo(g1)
+          .setCaptionLabel("Apply Calibration Values")
+            .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
+              ; 
 
   // Data log setup section
   Group g2 = cp5.addGroup("Data Log Setup")
@@ -187,15 +190,41 @@ void gui() {
   statusString = "Select COM port above!";
   messageArea.setText(statusString);
 
+  //Sensor connect section
+  Group g0 = cp5.addGroup("Sensor Connect")
+    .setBackgroundColor(color(0, 64))
+      .setBackgroundHeight(50)
+        ;
+ 
   // create a new accordion
   // add g1, g2, and g3 to the accordion.
   guiAccordion = cp5.addAccordion("acc")
     .setPosition(10, 10)
       .setWidth(220)
-        .addItem(g1)
-          .addItem(g2)
-            .addItem(g3)
-              ;
+        .addItem(g0)
+          .addItem(g1)
+            .addItem(g2)
+              .addItem(g3)
+                ;
+  guiAccordion.open(0, 3);
+  guiAccordion.setCollapseMode(Accordion.MULTI);
+  
+   // Refresh ports
+  cp5.addBang("refreshCom")
+    .setPosition(10, 10)
+      .setSize(200, 20)
+        .moveTo(g0)
+          .setCaptionLabel("Refresh COM Ports")
+            .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
+              ; 
+  // List all the available serial ports:
+  println(Serial.list());
+  //Make a dropdown list calle ports. Lets explain the values: ("name", left margin, top margin, width, height (84 here since the boxes have a height of 20, and theres 1 px between each item so 4 items (or scroll bar).
+  ports = cp5.addDropdownList("list-1", 10, 25, 200, 84)
+    .setPosition(10, 50)
+      .moveTo(g0);
+  //Setup the dropdownlist by using a function. This is more pratical if you have several list that needs the same settings.
+  customize(ports);
 }
 
 //The dropdown list returns the data in a way, that i dont fully understand, again mokey see monkey do. However once inside the two loops, the value (a float) can be achive via the used line ;).

@@ -1,6 +1,30 @@
 //BEGIN user input functions
+public void applyCal() {
+  // Check for and apply distance calibration
+  if (cp5.get(Textfield.class,"distCalEntry").getText().length() >= 1) {
+  println("Changing distance calibration to "+cp5.get(Textfield.class,"distCalEntry").getText());
+    distCal = Integer.parseInt(cp5.get(Textfield.class,"distCalEntry").getText());
+  }
+  
+  // Check for and apply X-Axis acceleration calibration
+  if (cp5.get(Textfield.class,"xlCalX").getText().length() >= 1) {
+  println("Changing xl X calibration to "+cp5.get(Textfield.class,"xlCalX").getText());
+    xlCals[0] = Float.parseFloat(cp5.get(Textfield.class,"xlCalX").getText());
+  }
+  // Check for and apply Y-Axis acceleration calibration
+  if (cp5.get(Textfield.class,"xlCalY").getText().length() >= 1) {
+  println("Changing xl Y calibration to "+cp5.get(Textfield.class,"xlCalY").getText());
+    xlCals[1] = Float.parseFloat(cp5.get(Textfield.class,"xlCalY").getText());
+  }
+  // Check for and apply Z-Axis acceleration calibration
+  if (cp5.get(Textfield.class,"xlCalZ").getText().length() >= 1) {
+  println("Changing xl Z calibration to "+cp5.get(Textfield.class,"xlCalZ").getText());
+    xlCals[2] = Float.parseFloat(cp5.get(Textfield.class,"xlCalZ").getText());
+  }
+}
 public void startLog() {
   statusString = "Now logging data";
+  messageArea.setText(statusString);
   data=new Data();
   data.beginSave();
   logging = true;
