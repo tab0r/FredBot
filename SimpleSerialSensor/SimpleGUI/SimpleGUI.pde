@@ -15,10 +15,12 @@ Textfield distCalEntry;
 Textfield xlCalX;
 Textfield xlCalY;
 Textfield xlCalZ;
+CheckBox calSignsCheckBox;
 
 Data data;                       // The data file stream
 DropdownList ports;              //Define the variable ports as a Dropdownlist.
 CheckBox sensorCheckBox;         //The sensor selection checkboxes
+
 Serial port;                     //Define the variable port as a Serial object.
 int Ss;                          //The dropdown list will return a float value, which we will connvert into an int. we will use this int for that).
 String[] comList ;               //A string to hold the ports in.
@@ -40,6 +42,9 @@ float[] xlVals = {
 float[] xlCals = {
   0, 0, 0
 };                               // Calibration values for accelerometer
+int[] calSigns = {
+  1, 1, 1, 1
+};                               // Calibration signs
 int lf = 10;                     // ASCII linefeed
 float xpos =0;
 int timeBuffer=0;
@@ -69,11 +74,37 @@ void gui() {
   Group g1 = cp5.addGroup("Sensor Calibration")
     .setBackgroundColor(color(0, 64))
       .setBackgroundHeight(230)
-        ;        
+        ;  
+  // Calibration signs for distance sensor
+  /*  cp5.addBang("calSign0")  
+   .setPosition(10, 55)
+   .setSize(20, 20)
+   .moveTo(g1)
+   .setCaptionLabel("+")
+   .setId(11)
+   .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
+   ;*/
+  calSignsCheckBox = cp5.addCheckBox("calSignCheckBox")
+    .setPosition(10, 62)
+      .setColorForeground(color(120))
+        .setColorActive(color(255))
+          .setColorLabel(color(255))
+            .setSize(20, 5)
+              .setItemsPerRow(1)
+                .setSpacingColumn(30)
+                  .setSpacingRow(30)
+                    .setCaptionLabel("-")
+                      .addItem("1", 1)
+                        .addItem("2", 2)
+                          .addItem("3", 3)
+                            .addItem("4", 4)
+                              .hideLabels()
+                                .moveTo(g1)
+                                  ;              
   // Calibration value for distance sensor            
   distCalEntry = cp5.addTextfield("distCalEntry")
     .moveTo(g1)
-      .setPosition(10, 55)
+      .setPosition(35, 55)
         .setSize(60, 20)
           .setCaptionLabel("Distance Calibration")
             .setColor(color(255, 0, 0))
@@ -81,8 +112,8 @@ void gui() {
   distCalEntry.setInputFilter(ControlP5.INTEGER);
   // Calibration value for acceleration x-axis            
   xlCalX = cp5.addTextfield("xlCalX")
-    .setPosition(10, 90)
-      .setSize(200, 20)
+    .setPosition(35, 90)
+      .setSize(175, 20)
         .setCaptionLabel("X-Axis Accelerometer Calibration")
           .setColor(color(255, 0, 0))
             .moveTo(g1)
@@ -90,8 +121,8 @@ void gui() {
   xlCalX.setInputFilter(ControlP5.FLOAT);
   // Calibration value for acceleration y-axis            
   xlCalY = cp5.addTextfield("xlCalY")
-    .setPosition(10, 125)
-      .setSize(200, 20)
+    .setPosition(35, 125)
+      .setSize(175, 20)
         .setCaptionLabel("Y-Axis Accelerometer Calibration")
           .setColor(color(255, 0, 0))
             .moveTo(g1)
@@ -100,8 +131,8 @@ void gui() {
   // Calibration value for acceleration z-axis            
   xlCalZ = cp5.addTextfield("xlCalZ")
     .setDecimalPrecision(10)
-      .setPosition(10, 160)
-        .setSize(200, 20)
+      .setPosition(35, 160)
+        .setSize(175, 20)
           .setCaptionLabel("Z-Axis Accelerometer Calibration")
             .setColor(color(255, 0, 0))
               .moveTo(g1)
@@ -128,7 +159,7 @@ void gui() {
       .setSize(155, 40)
         .setCaptionLabel("Enter data log filename")
           //.setFont(font)
-          .setFocus(true)
+          .setFocus(false)
             .setColor(color(255, 0, 0))
               .moveTo(g2)
                 ;
@@ -179,7 +210,7 @@ void gui() {
   // Message area
   messageArea = cp5.addTextarea("txt")
     .setPosition(10, 60)
-      .setSize(200, 100)
+      .setSize(200, 80)
         .moveTo(g3)
           .setFont(createFont("arial", 12))
             .setLineHeight(18)
@@ -191,29 +222,16 @@ void gui() {
   messageArea.setText(statusString);
 
   //Sensor connect section
-  Group g0 = cp5.addGroup("Sensor Connect")
+  Group g4 = cp5.addGroup("Sensor Connect")
     .setBackgroundColor(color(0, 64))
       .setBackgroundHeight(50)
         ;
- 
-  // create a new accordion
-  // add g1, g2, and g3 to the accordion.
-  guiAccordion = cp5.addAccordion("acc")
-    .setPosition(10, 10)
-      .setWidth(220)
-        .addItem(g0)
-          .addItem(g1)
-            .addItem(g2)
-              .addItem(g3)
-                ;
-  guiAccordion.open(0, 3);
-  guiAccordion.setCollapseMode(Accordion.MULTI);
-  
-   // Refresh ports
+
+  // Refresh ports
   cp5.addBang("refreshCom")
     .setPosition(10, 10)
       .setSize(200, 20)
-        .moveTo(g0)
+        .moveTo(g4)
           .setCaptionLabel("Refresh COM Ports")
             .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
               ; 
@@ -222,12 +240,27 @@ void gui() {
   //Make a dropdown list calle ports. Lets explain the values: ("name", left margin, top margin, width, height (84 here since the boxes have a height of 20, and theres 1 px between each item so 4 items (or scroll bar).
   ports = cp5.addDropdownList("list-1", 10, 25, 200, 84)
     .setPosition(10, 50)
-      .moveTo(g0);
+      .moveTo(g4);
   //Setup the dropdownlist by using a function. This is more pratical if you have several list that needs the same settings.
   customize(ports);
+
+  // create a new accordion
+  // add g1, g2, g3 and g4 to the accordion.
+  guiAccordion = cp5.addAccordion("acc")
+    .setPosition(10, 10)
+      .setWidth(220)
+        .addItem(g1)
+          .addItem(g2)
+            .addItem(g3)
+              .addItem(g4)
+                ;
+  guiAccordion.open(3);
+  guiAccordion.setCollapseMode(Accordion.MULTI);
 }
 
-//The dropdown list returns the data in a way, that i dont fully understand, again mokey see monkey do. However once inside the two loops, the value (a float) can be achive via the used line ;).
+// The dropdown list returns the data in a way, that i dont fully understand, again mokey see monkey do. 
+// However once inside the two loops, the value (a float) can be achive via the used line ;). -Dumle29
+// We're extending this to include a few other things -Tabor
 void controlEvent(ControlEvent theEvent) {
   if (theEvent.getName()=="list-1") 
   {
@@ -237,6 +270,9 @@ void controlEvent(ControlEvent theEvent) {
     Ss = int(S);
     //With this code, its a one time setup, so we state that the selection of port has been done. You could modify the code to stop the serial connection and establish a new one.
     Comselected = true;
+  } else if (theEvent.getId()==11) {
+    //calSign0.remove();
+    //calSign0.setCaptionLabel("-");
   }
 }
 
@@ -390,11 +426,11 @@ void serialEvent(Serial p) {
   } else {
     logData = p.readStringUntil(lf);
     String[] inputData = split(logData, ',');
-    distVal = Integer.parseInt(inputData[1].trim()) + distCal;
+    distVal = Integer.parseInt(inputData[1].trim()) + distCal*calSigns[0];
     msExt = Integer.parseInt(inputData[0].trim());
-    xlVals[0] = xlCals[0] + Integer.parseInt(inputData[2].trim()) * 0.0078;
-    xlVals[1] = xlCals[1] + Integer.parseInt(inputData[3].trim()) * 0.0078;
-    xlVals[2] = xlCals[2] + Integer.parseInt(inputData[4].trim()) * 0.0078;
+    xlVals[0] = xlCals[0]*calSigns[1] + Integer.parseInt(inputData[2].trim()) * 0.0078;
+    xlVals[1] = xlCals[1]*calSigns[2] + Integer.parseInt(inputData[3].trim()) * 0.0078;
+    xlVals[2] = xlCals[2]*calSigns[3] + Integer.parseInt(inputData[4].trim()) * 0.0078;
     /*
     //if we've already heard from the controller, we 
      //know we're receiving numbers, so save as such

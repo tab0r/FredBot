@@ -1,4 +1,5 @@
 //BEGIN user input functions
+
 public void applyCal() {
   // Check for and apply distance calibration
   if (cp5.get(Textfield.class,"distCalEntry").getText().length() >= 1) {
@@ -11,11 +12,13 @@ public void applyCal() {
   println("Changing xl X calibration to "+cp5.get(Textfield.class,"xlCalX").getText());
     xlCals[0] = Float.parseFloat(cp5.get(Textfield.class,"xlCalX").getText());
   }
+  
   // Check for and apply Y-Axis acceleration calibration
   if (cp5.get(Textfield.class,"xlCalY").getText().length() >= 1) {
   println("Changing xl Y calibration to "+cp5.get(Textfield.class,"xlCalY").getText());
     xlCals[1] = Float.parseFloat(cp5.get(Textfield.class,"xlCalY").getText());
   }
+  
   // Check for and apply Z-Axis acceleration calibration
   if (cp5.get(Textfield.class,"xlCalZ").getText().length() >= 1) {
   println("Changing xl Z calibration to "+cp5.get(Textfield.class,"xlCalZ").getText());
