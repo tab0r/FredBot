@@ -1,6 +1,50 @@
 //BEGIN user input functions
+
+public void applyCal() {
+  // load the signs of each calibration value from calSignsCheckBox
+  int[] signs = {1, 1, 1, 1};
+  for (int i = 0; i<4; i=i+1) {
+    if (calSignsCheckBox.getState(i) == true) {
+      signs[i] = -1;
+    }
+  };
+  
+  // Check for and apply distance calibration
+  if (cp5.get(Textfield.class,"distCalEntry").getText().length() >= 1) {
+    distCal = signs[0]*Integer.parseInt(cp5.get(Textfield.class,"distCalEntry").getText());
+    println("Changing distance calibration to "+distCal);
+  }
+  
+  // Check for and apply X-Axis acceleration calibration
+  if (cp5.get(Textfield.class,"xlCalX").getText().length() >= 1) {
+    xlCals[0] = signs[1]*Float.parseFloat(cp5.get(Textfield.class,"xlCalX").getText());
+    println("Changing xl X calibration to "+xlCals[0]);
+  }
+  
+  // Check for and apply Y-Axis acceleration calibration
+  if (cp5.get(Textfield.class,"xlCalY").getText().length() >= 1) {
+    xlCals[1] = signs[2]*Float.parseFloat(cp5.get(Textfield.class,"xlCalY").getText());
+    println("Changing xl X calibration to "+xlCals[1]);
+  }
+  
+  // Check for and apply Z-Axis acceleration calibration
+  if (cp5.get(Textfield.class,"xlCalZ").getText().length() >= 1) {
+    xlCals[2] = signs[3]*Float.parseFloat(cp5.get(Textfield.class,"xlCalZ").getText());
+    println("Changing xl X calibration to "+xlCals[2]);
+  }
+  
+  calibrationString = "Current calibration values:"+char(lf)+
+    "Distance: "+distCal+char(lf)+
+    "X-Axis xl: "+xlCals[0]+char(lf)+
+    "Y-Axis xl: "+xlCals[1]+char(lf)+
+    "Z-Axis xl: "+xlCals[2]+char(lf)+
+    "Enter calibration values below, click for negatives.";
+  calibrationMessage.setText(calibrationString); 
+}
+
 public void startLog() {
   statusString = "Now logging data";
+  messageArea.setText(statusString);
   data=new Data();
   data.beginSave();
   logging = true;
@@ -41,6 +85,7 @@ public void fileName(String theText) {
   // automatically receives results from controller input
   println("Changing datalog name to: "+theText);
   fileName = theText;
+  updateLogMessage();
 }
 
 public void setName() {
@@ -58,10 +103,20 @@ void folderSelected(File selection) {
   } else {
     selectedFolder = selection.getAbsolutePath();
     println("User selected " + selectedFolder);
+    updateLogMessage();
   }
 }
   
-  //message area control
+//message area control
+void updateLogMessage() {
+    logSetupString = "filepath: "+  
+    selectedFolder+
+    char(10)+
+    "filename: "+
+    fileName+
+    " ####.txt";
+  logSetupMessage.setText(logSetupString); 
+}
 /*
 void referenceFunction() {
   if(key=='r') {

@@ -22,17 +22,27 @@ public class SimpleGUI extends PApplet {
 //saveData.pde Data utility by Marius Watz - http://workshop.evolutionzone.com
 // 
 //All other code by Tabor Henderson
+//Released under GNU GPL and CC SA 3.0 where applicable
 
 
 
 
 ControlP5 cp5;
+Accordion guiAccordion;
 String textValue = "";
 Textarea messageArea;
+Textarea calibrationMessage;
+Textarea logSetupMessage;
+Textfield distCalEntry;
+Textfield xlCalX;
+Textfield xlCalY;
+Textfield xlCalZ;
+CheckBox calSignsCheckBox;
 
 Data data;                       // The data file stream
 DropdownList ports;              //Define the variable ports as a Dropdownlist.
 CheckBox sensorCheckBox;         //The sensor selection checkboxes
+
 Serial port;                     //Define the variable port as a Serial object.
 int Ss;                          //The dropdown list will return a float value, which we will connvert into an int. we will use this int for that).
 String[] comList ;               //A string to hold the ports in.
@@ -40,6 +50,8 @@ boolean serialSet;               //A value to test if we have setup the Serial p
 boolean Comselected = false;     //A value to test if you have chosen a port in the list.
 
 String statusString;             // Status message
+String calibrationString;        // Calibration status message
+String logSetupString;           // Data log setup status message
 String fileName = "data";        // Default data log file header
 String selectedFolder;           // User-selected data folder
 int inVal = 0;                   // Input value from serial port
@@ -47,65 +59,163 @@ String logData = "";             //String for catching all serial output
 int logStartTime = 0;            // Integer log start time variable to give us cleaner logs
 int msExt = 0;                   // Integer for the Arduino timestamp
 int distVal = 0;                 // Input value for ping distance
+int distCal = 0;                 // Distance calibration value
 float[] xlVals = {
   0, 0, 0
-};                  // Input values for accelerometer 
+};                               // Input values for accelerometer
+float[] xlCals = {
+  0, 0, 0
+};                               // Calibration values for accelerometer
+int[] calSigns = {
+  1, 1, 1, 1
+};                               // Calibration signs
 int lf = 10;                     // ASCII linefeed
-float xpos;
+float xpos =0;
+int timeBuffer=0;
+float thetaBuffer=0.1f;
+float phiBuffer=0.1f;
+float gammaBuffer=0.0f;
+float gammaPrimeBuffer=0.1f;
+float alphaBuffer = 0.5f;
 boolean firstContact = false;    // Whether we've heard from the microcontroller
 boolean logging = false;
 
 public void setup() {  
-  size(240, 400);//240
+  size(240, 400, P3D);//240
   PFont font = createFont("arial", 20);
+  gui();
+  setupCOMport(ports);
+  selectFolder("Select a folder to save data in:", "folderSelected");
+  textFont(font);
+}
+
+public void gui() {
   cp5 = new ControlP5(this);
+
+  // Note that group g0 is below to ensure the dropdown list gets rendered above other elements
+
+    //Sensor calibration section
+  Group g1 = cp5.addGroup("Sensor Calibration")
+    .setBackgroundColor(color(0, 64))
+      .setBackgroundHeight(290)
+        ;  
+  // Message area
+  calibrationMessage = cp5.addTextarea("calMsg")
+    .setPosition(10, 10)
+      .setSize(200, 100)
+        .moveTo(g1)
+          .setFont(createFont("arial", 11))
+            .setLineHeight(18)
+              .setColor(color(255))
+                .setColorBackground(color(255, 100))
+                  .setColorForeground(color(255, 100));
+  ;
+  calibrationString = "Enter calibration values below, click for negatives";
+  calibrationMessage.setText(calibrationString);        
+  // Calibration signs for distance sensor
+  calSignsCheckBox = cp5.addCheckBox("calSignCheckBox")
+    .setPosition(10, 122)
+      .setColorForeground(color(120))
+        .setColorActive(color(255))
+          .setColorLabel(color(255))
+            .setSize(20, 5)
+              .setItemsPerRow(1)
+                .setSpacingColumn(30)
+                  .setSpacingRow(30)
+                    .setCaptionLabel("-")
+                      .addItem("1", 1)
+                        .addItem("2", 2)
+                          .addItem("3", 3)
+                            .addItem("4", 4)
+                              .hideLabels()
+                                .moveTo(g1)
+                                  ;              
+  // Calibration value for distance sensor            
+  distCalEntry = cp5.addTextfield("distCalEntry")
+    .moveTo(g1)
+      .setPosition(35, 115)
+        .setSize(60, 20)
+          .setCaptionLabel("Distance Calibration")
+            .setColor(color(255, 0, 0))
+              ;
+  distCalEntry.setInputFilter(ControlP5.INTEGER);
+  // Calibration value for acceleration x-axis            
+  xlCalX = cp5.addTextfield("xlCalX")
+    .setPosition(35, 150)
+      .setSize(175, 20)
+        .setCaptionLabel("X-Axis Accelerometer Calibration")
+          .setColor(color(255, 0, 0))
+            .moveTo(g1)
+              ;
+  xlCalX.setInputFilter(ControlP5.FLOAT);
+  // Calibration value for acceleration y-axis            
+  xlCalY = cp5.addTextfield("xlCalY")
+    .setPosition(35, 185)
+      .setSize(175, 20)
+        .setCaptionLabel("Y-Axis Accelerometer Calibration")
+          .setColor(color(255, 0, 0))
+            .moveTo(g1)
+              ;
+  xlCalY.setInputFilter(ControlP5.FLOAT);
+  // Calibration value for acceleration z-axis            
+  xlCalZ = cp5.addTextfield("xlCalZ")
+    .setDecimalPrecision(10)
+      .setPosition(35, 220)
+        .setSize(175, 20)
+          .setCaptionLabel("Z-Axis Accelerometer Calibration")
+            .setColor(color(255, 0, 0))
+              .moveTo(g1)
+                ;  
+  xlCalZ.setInputFilter(ControlP5.FLOAT);
+  // Apply calibration values button
+  cp5.addBang("applyCal")
+    .setPosition(10, 260)
+      .setSize(200, 20)
+        .moveTo(g1)
+          .setCaptionLabel("Apply Calibration Values")
+            .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
+              ; 
+
+  // Data log setup section
+  Group g2 = cp5.addGroup("Data Log Setup")
+    .setBackgroundColor(color(0, 64))
+      .setBackgroundHeight(200)
+        ;
+  // Log setup message area
+  logSetupMessage = cp5.addTextarea("logMsg")
+    .setPosition(10, 150)
+      .setSize(200, 40)
+        .moveTo(g2)
+          .setFont(createFont("arial", 11))
+            .setLineHeight(18)
+              .setColor(color(255))
+                .setColorBackground(color(255, 100))
+                  .setColorForeground(color(255, 100))
+                  ;
+                 updateLogMessage(); 
+  
   // File name input area
   cp5.addTextfield("fileName")
-    .setPosition(20, 20)
+    .setPosition(10, 10)
       .setSize(155, 40)
         .setCaptionLabel("Enter data log filename")
-          .setFont(font)
-            .setFocus(true)
-              .setColor(color(255, 0, 0))
+          .setFont(createFont("arial", 18))
+          //.setFont(font)
+          .setFocus(false)
+            .setColor(color(255, 0, 0))
+              .moveTo(g2)
                 ;
   // Change file name button          
   cp5.addBang("setName")
-    .setPosition(180, 20)
+    .setPosition(170, 10)
       .setSize(40, 40)
-        .setCaptionLabel("OK")
-          .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
-            ;  
-  // Refresh ports
-  cp5.addBang("refreshCom")
-    .setPosition(20, 120)
-      .setSize(200, 20)
-        .setCaptionLabel("Refresh COM Ports")
-          .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
-            ; 
-  // Finish logging button           
-  cp5.addBang("finishLog")
-    .setPosition(125, 75)
-      .setSize(95, 40)
-        .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
-          ; 
-  // Start logging button
-  cp5.addBang("startLog")
-    .setPosition(20, 75)
-      .setSize(95, 40)
-        .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
-          ; 
-  // Message area
-  messageArea = cp5.addTextarea("txt")
-    .setPosition(20, 165)
-      .setSize(200, 100)
-        .setFont(createFont("arial", 12))
-          .setLineHeight(18)
-            .setColor(color(128))
-              .setColorBackground(color(255, 100))
-                .setColorForeground(color(255, 100));
-  ;
+        .moveTo(g2)
+          .setCaptionLabel("OK")
+            .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
+              ; 
+  // Data log entry checkboxes          
   sensorCheckBox = cp5.addCheckBox("sensorCheckBox")
-    .setPosition(20, 270)
+    .setPosition(10, 65)
       .setColorForeground(color(120))
         .setColorActive(color(255))
           .setColorLabel(color(255))
@@ -115,26 +225,85 @@ public void setup() {
                   .setSpacingRow(5)
                     .addItem("CPU Clock Time", 1)
                       .addItem("Sensor Clock Time", 2)
-                        .addItem("Ultrasonic Distance Sensor", 3)
+                        .addItem("Ultrasonic Distance", 3)
                           .addItem("Accelerometer", 4)
-                            ;
+                            .activateAll()
+                              .moveTo(g2)
+                                ;
+  // Active section
+  Group g3 = cp5.addGroup("Data Logging")
+    .setBackgroundColor(color(0, 64))
+      .setBackgroundHeight(150)
+        ;
+
+  // Finish logging button           
+  cp5.addBang("finishLog")
+    .setPosition(125, 10)
+      .setSize(85, 40)
+        .moveTo(g3)
+          .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
+            ; 
+  // Start logging button
+  cp5.addBang("startLog")
+    .setPosition(10, 10)
+      .setSize(95, 40)
+        .moveTo(g3)
+          .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
+            ; 
+  // Message area
+  messageArea = cp5.addTextarea("txt")
+    .setPosition(10, 60)
+      .setSize(200, 80)
+        .moveTo(g3)
+          .setFont(createFont("arial", 12))
+            .setLineHeight(18)
+              .setColor(color(128))
+                .setColorBackground(color(255, 100))
+                  .setColorForeground(color(255, 100));
+  ;
   statusString = "Select COM port above!";
   messageArea.setText(statusString);
 
-  textFont(font);
+  //Sensor connect section
+  Group g4 = cp5.addGroup("Sensor Connect")
+    .setBackgroundColor(color(0, 64))
+      .setBackgroundHeight(50)
+        ;
 
+  // Refresh ports
+  cp5.addBang("refreshCom")
+    .setPosition(10, 10)
+      .setSize(200, 20)
+        .moveTo(g4)
+          .setCaptionLabel("Refresh COM Ports")
+            .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
+              ; 
   // List all the available serial ports:
   println(Serial.list());
   //Make a dropdown list calle ports. Lets explain the values: ("name", left margin, top margin, width, height (84 here since the boxes have a height of 20, and theres 1 px between each item so 4 items (or scroll bar).
   ports = cp5.addDropdownList("list-1", 10, 25, 200, 84)
-    .setPosition(20, 160);
+    .setPosition(10, 50)
+      .moveTo(g4);
   //Setup the dropdownlist by using a function. This is more pratical if you have several list that needs the same settings.
   customize(ports);
-  setupCOMport(ports);
-  selectFolder("Select a folder to save data in:", "folderSelected");
+
+  // create a new accordion
+  // add g1, g2, g3 and g4 to the accordion.
+  guiAccordion = cp5.addAccordion("acc")
+    .setPosition(10, 10)
+      .setWidth(220)
+        .addItem(g1)
+          .addItem(g2)
+            .addItem(g3)
+              .addItem(g4)
+                ;
+  guiAccordion.open(3);
+  guiAccordion.setCollapseMode(Accordion.MULTI);
 }
 
-//The dropdown list returns the data in a way, that i dont fully understand, again mokey see monkey do. However once inside the two loops, the value (a float) can be achive via the used line ;).
+// The dropdown list returns the data in a way, that i dont fully understand, again mokey see monkey do. 
+// However once inside the two loops, the value (a float) can be achive via the used line ;). -Dumle29
+// We're extending this to include a few other things -Tabor
 public void controlEvent(ControlEvent theEvent) {
   if (theEvent.getName()=="list-1") 
   {
@@ -144,10 +313,13 @@ public void controlEvent(ControlEvent theEvent) {
     Ss = PApplet.parseInt(S);
     //With this code, its a one time setup, so we state that the selection of port has been done. You could modify the code to stop the serial connection and establish a new one.
     Comselected = true;
+  } else if (theEvent.getId()==11) {
+    //calSign0.remove();
+    //calSign0.setCaptionLabel("-");
   }
 }
 
-//here we setup the dropdown list.
+//here we setup the generic dropdown list.
 public void customize(DropdownList ddl) {
   //Set the background color of the list (you wont see this though).
   ddl.setBackgroundColor(color(200));
@@ -246,6 +418,38 @@ public void draw() {
     rect(20, 360, xpos, 20);
     port.write('K');       // ask for data
   }
+  if (msExt != 0) {
+    println("alphaBuffer: "+alphaBuffer);
+    int dt = abs(1+msExt-timeBuffer);
+    float RC = dt*(1.0f-alphaBuffer)/alphaBuffer;
+    float alpha = dt/(dt+RC);
+    alphaBuffer = alpha;
+    println("alpha: "+alpha+", timeBuffer: "+timeBuffer+", dt: "+dt+", RC: "+RC);
+    timeBuffer = msExt;
+    println("new timeBuffer: "+timeBuffer);
+    pushMatrix();
+    translate(170, 320, 0);
+    float theta = atan(xlVals[1]/xlVals[2]);
+    float phi =  atan(xlVals[0]/xlVals[2]);
+    float gammaPrime = xlVals[1]*dt/10000+gammaPrimeBuffer;
+    float gamma = ((dt^2)*xlVals[1])/1000+gammaPrime*dt/10000+gammaBuffer;
+    println("theta: "+theta+", phi: "+phi+", gamma: "+gamma);
+    //rotateY(lowPass(gammaBuffer, gamma, alpha));
+    //rotateY(alpha*gamma + (1-alpha)*gammaBuffer);
+    gammaBuffer = gamma;
+    gammaPrimeBuffer = gammaPrime;
+    //rotateX(alpha*theta + (1-alpha)*thetaBuffer);
+    rotateX(lowPass(thetaBuffer, theta, alpha));
+    thetaBuffer = theta;
+    //rotateZ(alpha*phi+ (1-alpha)*phiBuffer);
+    rotateZ(lowPass(phiBuffer, phi, alpha));
+    phiBuffer = phi;
+    //noFill();
+    color(255, 255, 0);
+    stroke(255);
+    box(40);
+    popMatrix();
+  }
 }
 
 public void serialEvent(Serial p) {
@@ -265,11 +469,11 @@ public void serialEvent(Serial p) {
   } else {
     logData = p.readStringUntil(lf);
     String[] inputData = split(logData, ',');
-    distVal = Integer.parseInt(inputData[1].trim());
+    distVal = Integer.parseInt(inputData[1].trim()) + distCal*calSigns[0];
     msExt = Integer.parseInt(inputData[0].trim());
-    xlVals[0] = Integer.parseInt(inputData[2].trim()) * 0.0078f;
-    xlVals[1] = Integer.parseInt(inputData[3].trim()) * 0.0078f;
-    xlVals[2] = Integer.parseInt(inputData[4].trim()) * 0.0078f;
+    xlVals[0] = xlCals[0]*calSigns[1] + Integer.parseInt(inputData[2].trim()) * 0.0078f;
+    xlVals[1] = xlCals[1]*calSigns[2] + Integer.parseInt(inputData[3].trim()) * 0.0078f;
+    xlVals[2] = xlCals[2]*calSigns[3] + Integer.parseInt(inputData[4].trim()) * 0.0078f;
     /*
     //if we've already heard from the controller, we 
      //know we're receiving numbers, so save as such
@@ -292,9 +496,58 @@ public void serialEvent(Serial p) {
   }
 }
 
+public float lowPass(float x_b, float x_c, float alpha) {
+  float y_c = alpha*x_c + (1-alpha)*x_b;
+  return y_c;
+} 
+
 //BEGIN user input functions
+
+public void applyCal() {
+  // load the signs of each calibration value from calSignsCheckBox
+  int[] signs = {1, 1, 1, 1};
+  for (int i = 0; i<4; i=i+1) {
+    if (calSignsCheckBox.getState(i) == true) {
+      signs[i] = -1;
+    }
+  };
+  
+  // Check for and apply distance calibration
+  if (cp5.get(Textfield.class,"distCalEntry").getText().length() >= 1) {
+    distCal = signs[0]*Integer.parseInt(cp5.get(Textfield.class,"distCalEntry").getText());
+    println("Changing distance calibration to "+distCal);
+  }
+  
+  // Check for and apply X-Axis acceleration calibration
+  if (cp5.get(Textfield.class,"xlCalX").getText().length() >= 1) {
+    xlCals[0] = signs[1]*Float.parseFloat(cp5.get(Textfield.class,"xlCalX").getText());
+    println("Changing xl X calibration to "+xlCals[0]);
+  }
+  
+  // Check for and apply Y-Axis acceleration calibration
+  if (cp5.get(Textfield.class,"xlCalY").getText().length() >= 1) {
+    xlCals[1] = signs[2]*Float.parseFloat(cp5.get(Textfield.class,"xlCalY").getText());
+    println("Changing xl X calibration to "+xlCals[1]);
+  }
+  
+  // Check for and apply Z-Axis acceleration calibration
+  if (cp5.get(Textfield.class,"xlCalZ").getText().length() >= 1) {
+    xlCals[2] = signs[3]*Float.parseFloat(cp5.get(Textfield.class,"xlCalZ").getText());
+    println("Changing xl X calibration to "+xlCals[2]);
+  }
+  
+  calibrationString = "Current calibration values:"+PApplet.parseChar(lf)+
+    "Distance: "+distCal+PApplet.parseChar(lf)+
+    "X-Axis xl: "+xlCals[0]+PApplet.parseChar(lf)+
+    "Y-Axis xl: "+xlCals[1]+PApplet.parseChar(lf)+
+    "Z-Axis xl: "+xlCals[2]+PApplet.parseChar(lf)+
+    "Enter calibration values below, click for negatives.";
+  calibrationMessage.setText(calibrationString); 
+}
+
 public void startLog() {
   statusString = "Now logging data";
+  messageArea.setText(statusString);
   data=new Data();
   data.beginSave();
   logging = true;
@@ -335,6 +588,7 @@ public void fileName(String theText) {
   // automatically receives results from controller input
   println("Changing datalog name to: "+theText);
   fileName = theText;
+  updateLogMessage();
 }
 
 public void setName() {
@@ -352,10 +606,20 @@ public void folderSelected(File selection) {
   } else {
     selectedFolder = selection.getAbsolutePath();
     println("User selected " + selectedFolder);
+    updateLogMessage();
   }
 }
   
-  //message area control
+//message area control
+public void updateLogMessage() {
+    logSetupString = "filepath: "+  
+    selectedFolder+
+    PApplet.parseChar(10)+
+    "filename: "+
+    fileName+
+    " ####.txt";
+  logSetupMessage.setText(logSetupString); 
+}
 /*
 void referenceFunction() {
   if(key=='r') {

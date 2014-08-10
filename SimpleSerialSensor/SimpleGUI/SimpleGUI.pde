@@ -3,6 +3,7 @@
 //saveData.pde Data utility by Marius Watz - http://workshop.evolutionzone.com
 // 
 //All other code by Tabor Henderson
+//Released under GNU GPL and CC SA 3.0 where applicable
 
 import processing.serial.*;
 import controlP5.*;
@@ -11,6 +12,8 @@ ControlP5 cp5;
 Accordion guiAccordion;
 String textValue = "";
 Textarea messageArea;
+Textarea calibrationMessage;
+Textarea logSetupMessage;
 Textfield distCalEntry;
 Textfield xlCalX;
 Textfield xlCalY;
@@ -28,6 +31,8 @@ boolean serialSet;               //A value to test if we have setup the Serial p
 boolean Comselected = false;     //A value to test if you have chosen a port in the list.
 
 String statusString;             // Status message
+String calibrationString;        // Calibration status message
+String logSetupString;           // Data log setup status message
 String fileName = "data";        // Default data log file header
 String selectedFolder;           // User-selected data folder
 int inVal = 0;                   // Input value from serial port
@@ -73,19 +78,24 @@ void gui() {
     //Sensor calibration section
   Group g1 = cp5.addGroup("Sensor Calibration")
     .setBackgroundColor(color(0, 64))
-      .setBackgroundHeight(230)
+      .setBackgroundHeight(290)
         ;  
+  // Message area
+  calibrationMessage = cp5.addTextarea("calMsg")
+    .setPosition(10, 10)
+      .setSize(200, 100)
+        .moveTo(g1)
+          .setFont(createFont("arial", 11))
+            .setLineHeight(18)
+              .setColor(color(255))
+                .setColorBackground(color(255, 100))
+                  .setColorForeground(color(255, 100));
+  ;
+  calibrationString = "Enter calibration values below, click for negatives";
+  calibrationMessage.setText(calibrationString);        
   // Calibration signs for distance sensor
-  /*  cp5.addBang("calSign0")  
-   .setPosition(10, 55)
-   .setSize(20, 20)
-   .moveTo(g1)
-   .setCaptionLabel("+")
-   .setId(11)
-   .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
-   ;*/
   calSignsCheckBox = cp5.addCheckBox("calSignCheckBox")
-    .setPosition(10, 62)
+    .setPosition(10, 122)
       .setColorForeground(color(120))
         .setColorActive(color(255))
           .setColorLabel(color(255))
@@ -104,7 +114,7 @@ void gui() {
   // Calibration value for distance sensor            
   distCalEntry = cp5.addTextfield("distCalEntry")
     .moveTo(g1)
-      .setPosition(35, 55)
+      .setPosition(35, 115)
         .setSize(60, 20)
           .setCaptionLabel("Distance Calibration")
             .setColor(color(255, 0, 0))
@@ -112,7 +122,7 @@ void gui() {
   distCalEntry.setInputFilter(ControlP5.INTEGER);
   // Calibration value for acceleration x-axis            
   xlCalX = cp5.addTextfield("xlCalX")
-    .setPosition(35, 90)
+    .setPosition(35, 150)
       .setSize(175, 20)
         .setCaptionLabel("X-Axis Accelerometer Calibration")
           .setColor(color(255, 0, 0))
@@ -121,7 +131,7 @@ void gui() {
   xlCalX.setInputFilter(ControlP5.FLOAT);
   // Calibration value for acceleration y-axis            
   xlCalY = cp5.addTextfield("xlCalY")
-    .setPosition(35, 125)
+    .setPosition(35, 185)
       .setSize(175, 20)
         .setCaptionLabel("Y-Axis Accelerometer Calibration")
           .setColor(color(255, 0, 0))
@@ -131,7 +141,7 @@ void gui() {
   // Calibration value for acceleration z-axis            
   xlCalZ = cp5.addTextfield("xlCalZ")
     .setDecimalPrecision(10)
-      .setPosition(35, 160)
+      .setPosition(35, 220)
         .setSize(175, 20)
           .setCaptionLabel("Z-Axis Accelerometer Calibration")
             .setColor(color(255, 0, 0))
@@ -140,7 +150,7 @@ void gui() {
   xlCalZ.setInputFilter(ControlP5.FLOAT);
   // Apply calibration values button
   cp5.addBang("applyCal")
-    .setPosition(10, 200)
+    .setPosition(10, 260)
       .setSize(200, 20)
         .moveTo(g1)
           .setCaptionLabel("Apply Calibration Values")
@@ -150,14 +160,27 @@ void gui() {
   // Data log setup section
   Group g2 = cp5.addGroup("Data Log Setup")
     .setBackgroundColor(color(0, 64))
-      .setBackgroundHeight(150)
+      .setBackgroundHeight(200)
         ;
-
+  // Log setup message area
+  logSetupMessage = cp5.addTextarea("logMsg")
+    .setPosition(10, 150)
+      .setSize(200, 40)
+        .moveTo(g2)
+          .setFont(createFont("arial", 11))
+            .setLineHeight(18)
+              .setColor(color(255))
+                .setColorBackground(color(255, 100))
+                  .setColorForeground(color(255, 100))
+                  ;
+                 updateLogMessage(); 
+  
   // File name input area
   cp5.addTextfield("fileName")
     .setPosition(10, 10)
       .setSize(155, 40)
         .setCaptionLabel("Enter data log filename")
+          .setFont(createFont("arial", 18))
           //.setFont(font)
           .setFocus(false)
             .setColor(color(255, 0, 0))
@@ -185,8 +208,9 @@ void gui() {
                       .addItem("Sensor Clock Time", 2)
                         .addItem("Ultrasonic Distance", 3)
                           .addItem("Accelerometer", 4)
-                            .moveTo(g2)
-                              ;
+                            .activateAll()
+                              .moveTo(g2)
+                                ;
   // Active section
   Group g3 = cp5.addGroup("Data Logging")
     .setBackgroundColor(color(0, 64))
