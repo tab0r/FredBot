@@ -3,8 +3,15 @@
 //Support for ADXL is in-progress.
 //It is intended for use with nothing more than the Arduino board and sensor.
 //Position your device, attach via USB, and open your serial monitor. 
-//Each time you send the character 'P' to FredBot, it will return internal clock time and a ping value
-//Each time you send the character 'D' it will return the ping value alone
+//FredBot responds to single-character trigger codes.
+//Send 'P' to FredBot, it will return internal clock time and a ping value
+//Send 'D' & it will return the ping value alone
+//Send 'T' & it will return the clock value
+//Send 'G' & it will return the three accelerometer axis values
+//Send 'K' & it will return all available sensor data in the format
+// Time, Distance, X-axis XL, Y-axis XL, Z-axis XL
+//Send X, Y, or Z for a particular accelerometer axis
+//
 //Add the SPI library so we can communicate with the ADXL345 sensor
 #include <SPI.h>
 //Assign the Chip Select signal to pin 9.
@@ -50,11 +57,11 @@ void setup() {
     ; // wait for serial port to connect. Needed for Leonardo only
   }
   establishContact();
-    //Set up the Chip Select pin to be an output from the Arduino.
+  //Set up the Chip Select pin to be an output from the Arduino.
   pinMode(CS, OUTPUT);
   //Before communication starts, the Chip Select pin needs to be set high.
   digitalWrite(CS, HIGH);
-  
+
   //Put the ADXL345 into +/- 4G range by writing the value 0x01 to the DATA_FORMAT register.
   //Put the ADXL345 into +/- 2G range by writing the value 0x00 to the DATA_FORMAT register.
   writeRegister(DATA_FORMAT, 0x01);
@@ -77,17 +84,20 @@ void loop()
     else if (val == 'D') //if we get a D for 'distance'
     {
       Serial.println(pingOnce());
-    } else if (val == 'T') { // T for 'time'
+    } 
+    else if (val == 'T') { // T for 'time'
       String outputTime=String(millis());
       Serial.println(outputTime);
-    } else if (val == 'G') { // G for 'gees'
+    } 
+    else if (val == 'G') { // G for 'gees'
       feelStuff();
       Serial.print(gees[0]);
       Serial.print(", ");
       Serial.print(gees[1]);
       Serial.print(", ");
       Serial.println(gees[2]);
-    } else if (val == 'K') {
+    } 
+    else if (val == 'K') {
       String outputTime=String(millis());
       Serial.print(outputTime);
       Serial.print(", ");
@@ -99,9 +109,21 @@ void loop()
       Serial.print(gees[1]);
       Serial.print(", ");
       Serial.println(gees[2]);
-    }
-    //delay(100);
-  } 
+    } 
+    else if (val == 'X' || val == 'Y' || val == 'Z') {
+      feelStuff();
+      if (val == 'X') {
+        Serial.println(gees[0]);
+        } 
+      else if (val == 'Y') {
+        Serial.println(gees[1]); 
+        } 
+      else if (val == 'Z') {
+        Serial.println(gees[2]); 
+        } 
+      }
+      //delay(100);
+    } 
   else {
     //establishContact();
   }
@@ -113,3 +135,4 @@ void establishContact() {
     delay(300);
   }
 }
+
