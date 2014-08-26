@@ -18,7 +18,7 @@ The FredBot Project seeks to provide resources for physical measurement and data
 ===========================================
 2. Generic Program Structure
 ===========================================
-In general, the FredBot platform is based on modularity. So, each combination of an Arduino (or ATmega), sensing equipment, and data handling equipment will be called a module. Each module has a corresponding folder in the Manifest. All instructions for setting up that module may be found within the folder. All modules consist approximately of five steps. 
+Currently, the main goal of this project is developing a stable and highly flexible desktop-based data logging system. Originally, the FredBot platform pursued modularity. So, in the test code folder, you'll find modules designed for various use cases of FredBot. Each is a combination of an Arduino (or ATmega), sensing equipment, and data handling equipment. All modules consist approximately of five steps. 
 
 I. Program Initialization
 
@@ -32,6 +32,8 @@ V. Break
 
 VI. Data handling and shutdown
 
+So, the current system which arises from SimpleGUI and SimpleSerialSensor is distinct only in that data is saved at III, and no VI is required. 
+
 ===========================================
 3. Manifest
 ===========================================
@@ -39,15 +41,25 @@ VI. Data handling and shutdown
 Resources/
 	Papers, tutorials, and design files.
 
-SDSensor/
-	SD card data and setting storage.
+SensorClass/
+	A class for creating abstract sensor objects, with a test sketch.
+	
+SimpleGUI/
+	Processing sketch to provide a GUI for the program below. 
+	
+SimpleSerialSensor/
+	Arduino sketch which reports various sensor values in response to trigger codes.
 
-SerialSensor/
-	Data transmitted over serial, at time of run.
-	Future version to include temporary storage on internal memory.
-
-SimpleSensor/
-	Test, use at your own risk. Should be simpler, to even deserve the name.
+test code/
+	ADXL345_Basic/
+		Stock test code for ADXL345 accelerometer
+	SDSensor/
+		SD card data and setting storage.
+	SerialSensor/
+		Data transmitted over serial, at time of run.
+		Future version to include temporary storage on internal memory.
+	SimpleSensor/
+		Test, use at your own risk. Should be simpler, to even deserve the name.
 
 README.md
 
