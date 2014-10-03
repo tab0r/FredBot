@@ -26,17 +26,18 @@ void setup() {
   size(200, 200);
   println(Serial.list());
   port = new Serial(this, Serial.list()[serialIndex], 9600);       // prepare serial
-  port.bufferUntil(lf);                   // buffer until newline
-  pingDistance = new Sensor('D', port, "mm");   // create new sensor object
+  port.bufferUntil(lf);                                            // buffer until newline
+  pingDistance = new Sensor('D', port, "mm");                      // create new sensor object
 }
 
 void draw() {
-  pingDistance.triggerSensor();
-  background(0);
-  text(inData, 50, 50);
+  pingDistance.triggerSensor();     // trigger the ping sensor
+  background(0);                    // draw over the last draw()
+  text(inData, 50, 50);             // write the current sensor value
 }  
 
 void serialEvent(Serial p) {
+  // Handshake Protocol
   // if this is the first byte received, and it's an A,
   // clear the serial buffer and note that you've
   // had first contact from the microcontroller. 
@@ -50,7 +51,7 @@ void serialEvent(Serial p) {
       p.write("A");
     }
   } else {
-    pingDistance.parseInput(p);
+    inData = pingDistance.parseInput();
   }
 }
 

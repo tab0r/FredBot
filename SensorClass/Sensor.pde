@@ -11,7 +11,13 @@ class Sensor {
   // sensor readings will be 
   // calValues[0]+calValues[1]*rawValue
   
+  // these static variables can be un-commented in a full Java IDE
+  // static int count;
+  // static int prevSensor;
+  // static int prevReadingRecieved;
+  
   // CONSTRUCTORS
+  // basic 
   Sensor(char _trigger, Serial _port) {
     this.trigger = _trigger;
     this.port = _port;
@@ -19,14 +25,27 @@ class Sensor {
     count++;
   }
   
+  // with units
   Sensor(char _trigger, Serial _port, String _units) {
     this(_trigger, _port);
     this.units = _units;
   }  
   
+  // with units & name
+  Sensor(char _trigger, Serial _port, String _units, String _name) {
+    this(_trigger, _port, _units);
+    this.name = _name;
+  } 
+  
+  // with units, name & description
+  Sensor(char _trigger, Serial _port, String _units, String _name, String _desc) {
+    this(_trigger, _port, _units, _name);
+    this.description = _desc;
+  }  
+  
   // SETTERS
-  void setPort(Serial port) {
-    this.port = port;
+  void setPort(Serial _port) {
+    this.port = _port;
   }
   
   void setName(String _name) {
@@ -55,8 +74,8 @@ class Sensor {
 
   //float[] bufferedReadSensor(int numReadings) {  }
 
-  void parseInput(Serial p) {
-    inData = trim(p.readStringUntil(lf)) + " [" + units + "]";
+  String parseInput() {
+    return trim(port.readStringUntil(lf)) + " [" + units + "]";
   }
 }
 
