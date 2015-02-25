@@ -56,6 +56,7 @@ File myFile;
 // this constant won't change.  It's the pin number
 // of the sensor's output:
 const int pingPin = 7;
+const int echoPin = 8;
 
 //This is a list of some of the registers available on the ADXL345.
 //To learn more about these and the rest of the registers on the ADXL345, read the datasheet!
