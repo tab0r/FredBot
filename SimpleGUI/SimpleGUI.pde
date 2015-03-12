@@ -119,7 +119,7 @@ void draw() {
       data.add(newDataLine); // Write the coordinate to the file
     }
     rect(20, 360, xpos, 20);
-    port.write('K');       // ask for data
+    port1.write('K');       // ask for data
   }
   if (msExt != 0) {
     println("alphaBuffer: "+alphaBuffer);

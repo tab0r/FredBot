@@ -222,9 +222,9 @@ void controlEvent(ControlEvent theEvent) {
     //Store the value of which box was selected, we will use this to acces a string (char array).
     float S = theEvent.group().value();
     //Since the list returns a float, we need to convert it to an int. For that we us the int() function.
-    Ss = int(S);
+    Ss1 = int(S);
     //With this code, its a one time setup, so we state that the selection of port has been done. You could modify the code to stop the serial connection and establish a new one.
-    Comselected = true;
+    Comselected1 = true;
   } else if (theEvent.getId()==11) {
     //calSign0.remove();
     //calSign0.setCaptionLabel("-");
@@ -256,7 +256,7 @@ void customize(DropdownList ddl) {
 //here we setup the comList
 void setupCOMport(DropdownList ddl) {
   //Store the Serial ports in the string comList (char array).
-  comList = port.list();
+  comList = port1.list();
   //We need to know how many ports there are, to know how many items to add to the list, so we will convert it to a String object (part of a class).
   String comlist = join(comList, ",");
   //We also need how many characters there is in a single port name, we´ll store the chars here for counting later.

@@ -29,6 +29,23 @@ module pingHousing()
 	}
 }
 
+module fingers(h) 
+{
+	t = 6.65;
+	w = 3;
+	translate([w/2,-5.65,0]) cube([t, 11.30, h+10], false);
+	translate([-(t+w/2),-10,0]) cube([t, 20, h], false);
+	translate([-(w+1)/2,-0.5,0]) cube([w+1, 1, h], false);
+}
+
+
+module trackArm() 
+{	
+	cube([125, 25, 25], true);
+	translate([53.5, 0, -11]) rotate([0, 180, 0]) fingers(20);
+	translate([-53.5, 0, -11]) rotate([180, 0, 0]) fingers(20);
+}
+	
 module sensorBody()
 {
 	difference() {
@@ -36,8 +53,7 @@ module sensorBody()
 			// main volume	
 			cube([80, 80, 25], true);
 			// track mount arms
-			translate([35, -7.5, -60+12.5]) cube([15, 15, 60], false);
-			translate([-50, -7.5, -60+12.5]) cube([15, 15, 60], false);
+			translate([0, -37, 0]) trackArm();
 		}
 		// main cavity
 		translate([-34, -33, 0]) cube([68, 35, 13], false);
@@ -65,3 +81,4 @@ module FredBotAssumbly()
 }
 
 FredBotAssumbly();
+//trackArm();
