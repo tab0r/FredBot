@@ -6,7 +6,7 @@ module pingHousing()
 			union() 
 			{
 				cylinder(60, 15, 15, true);
-				cylinder(80, 5, 5, true);
+				cylinder(80, 3, 3, true);
 			}
 			translate([0, -15, 0]) 
 			{
@@ -29,11 +29,15 @@ module pingHousing()
 	}
 }
 
+module pingHousingNegative() {
+
+}
+
 module fingers(h) 
 {
-	t = 6.65;
+	t = 6;
 	w = 3;
-	translate([w/2,-5.65,0]) cube([t, 11.30, h+10], false);
+	translate([w/2,-5.65,0]) cube([t, 11, h], false);
 	translate([-(t+w/2),-10,0]) cube([t, 20, h], false);
 	translate([-(w+1)/2,-0.5,0]) cube([w+1, 1, h], false);
 }
@@ -42,8 +46,8 @@ module fingers(h)
 module trackArm() 
 {	
 	cube([125, 25, 25], true);
-	translate([53.5, 0, -11]) rotate([0, 180, 0]) fingers(20);
-	translate([-53.5, 0, -11]) rotate([180, 0, 0]) fingers(20);
+	translate([53, 0, -11]) rotate([0, 180, 0]) fingers(12);
+	translate([-53, 0, -11]) rotate([180, 0, 0]) fingers(12);
 }
 	
 module sensorBody()
@@ -56,7 +60,7 @@ module sensorBody()
 			translate([0, -37, 0]) trackArm();
 		}
 		// main cavity
-		translate([-34, -33, 0]) cube([68, 35, 13], false);
+		translate([-34, -45, 0]) cube([68, 50, 13], false);
 		// Teensy recess
 		translate([-38, -28, -5]) cube([34, 19, 6], false);
 		// USB port hole
@@ -74,11 +78,46 @@ module sensorBody()
 		}
 }
 
+module unibodyFredbot() {
+	difference() {
+		union() {
+			// main volume	
+			cube([80, 80, 25], true);
+			// track mount arms
+			translate([0, -37, 0]) trackArm();
+		}
+		// main cavity
+		translate([-34, -45, 0]) cube([68, 70, 13], false);
+		// Teensy recess
+		translate([-38, -28, -5]) cube([34, 19, 6], false);
+		// USB port hole
+		translate([-41, -24, -5]) cube([11, 12, 10], false);
+		// accelero recess
+		translate([0, -28, -5]) cube([19, 19, 6], false);
+			translate([0, -15, 0]) 
+			{
+				cube([22, 30, 50], true); //main cavity
+			}
+			translate([-15, -9, 0]) 
+			{
+				cube(15, true); //wire hole
+			}
+			//can holes
+			translate([13, 8, 0])
+			{
+				cylinder(17, 9, 9, true);
+			}
+			translate([-13, 8, 0])
+			{
+				cylinder(17, 9, 9, true);
+			}
+		}
+}
 module FredBotAssumbly() 
 {
 	translate([0,25,0]) rotate([-90, 0, 90]) pingHousing();
 	sensorBody();
 }
 
-FredBotAssumbly();
+unibodyFredbot();
 //trackArm();
