@@ -27,6 +27,7 @@ module sensorBody()
 }
 module pingHousing() 
 {
+	rotate([0, 0, 2]) {
 	intersection() {
 		cube([35, 25, 82], true);
 		difference() {
@@ -55,6 +56,7 @@ module pingHousing()
 				rotate([90, 0, 0]) cylinder(17, 9, 9, true);
 			}
 		}
+	}
 	}
 }
 
