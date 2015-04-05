@@ -44,7 +44,7 @@ module pingHousing()
 				cube(15, true); //wire hole
 			}
 			// act. light hole
-			translate([0, 8, 0]) rotate([90, 0, 0]) cylinder(17, 1.5, 1.5, true);
+			translate([6, 8, 0]) rotate([90, 0, 0]) cylinder(17, 2, 2, true);
 			//can holes
 			translate([0, 8, 13])
 			{
